@@ -8,6 +8,7 @@ enum Api {
   Logout = '/logout',
   GetUserInfo = '/me',
   GetPermCode = '/permissions',
+  Logs = '/action_logs',
 }
 
 /**
@@ -39,3 +40,17 @@ export function getPermCode() {
 export function doLogout() {
   return defHttp.post({ url: Api.Logout });
 }
+
+export const logsApi = {
+  list: (params: Recordable) => {
+    return defHttp.get({
+      params,
+      url: Api.Logs,
+    });
+  },
+  clear: () => {
+    return defHttp.post({
+      url: `${Api.Logs}/clear`,
+    });
+  },
+};
