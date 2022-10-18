@@ -62,6 +62,7 @@
         useSearchForm: true,
         bordered: true,
         showIndexColumn: false,
+        pagination: { pageSize: 15 },
       });
 
       function handleClear() {
