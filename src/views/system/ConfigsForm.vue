@@ -1,7 +1,13 @@
 <template>
   <Form :model="formParams" :label-col="{ span: 3 }" :wrapper-col="{ span: 8 }">
     <template v-for="item in formParams" :key="item.id">
-      <FormItem :label="item.name">
+      <FormItem>
+        <template #label>
+          <Tooltip v-if="item.remark" :title="item.remark">
+            <Icon icon="ant-design:question-circle-outlined" class="mr-1" />
+          </Tooltip>
+          <span>{{ item.name }}</span>
+        </template>
         <template v-if="item.type == 'number'">
           <InputNumber v-model:value="item.value" />
         </template>
@@ -73,12 +79,14 @@
     Radio,
     CheckboxGroup,
     Checkbox,
+    Tooltip,
   } from 'ant-design-vue';
 
+  import { Icon } from '/@/components/Icon';
   import { useMessage } from '/@/hooks/web/useMessage';
   import CustomUpload from '/@/components/CustomUpload/index.vue';
 
-  import { configApi } from '/@/api/sys/config';
+  import { configsApi } from '/@/api/sys/config';
 
   export default defineComponent({
     name: 'ConfigsForm',
@@ -95,6 +103,8 @@
       ARadio: Radio,
       ACheckboxGroup: CheckboxGroup,
       ACheckbox: Checkbox,
+      Tooltip,
+      Icon,
       CustomUpload,
     },
     props: {
@@ -123,7 +133,7 @@
 
       async function getConfig() {
         try {
-          const data = await configApi.list({ group: group.value });
+          const data = await configsApi.list({ group: group.value });
 
           formParams.value = data;
         } catch (err) {
@@ -156,7 +166,7 @@
             };
           });
 
-          await configApi.update({ data });
+          await configsApi.update({ data });
 
           loading.value = false;
           createMessage.success('保存成功');

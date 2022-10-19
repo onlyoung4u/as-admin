@@ -8,6 +8,7 @@ enum Api {
   Logout = '/logout',
   GetUserInfo = '/me',
   GetPermCode = '/permissions',
+  ResetPassword = '/reset_pwd',
   User = '/user',
   Logs = '/action_logs',
 }
@@ -36,6 +37,13 @@ export function getUserInfo() {
 
 export function getPermCode() {
   return defHttp.get<string[]>({ url: Api.GetPermCode });
+}
+
+export function resetPwd(data: Recordable) {
+  return defHttp.post({
+    data,
+    url: Api.ResetPassword,
+  });
 }
 
 export function doLogout() {

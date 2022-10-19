@@ -15,7 +15,7 @@
   import { PageWrapper } from '/@/components/Page';
   import ConfigsForm from './ConfigsForm.vue';
 
-  import { configMap, configApi } from '/@/api/sys/config';
+  import { configMap, configsApi } from '/@/api/sys/config';
 
   export default defineComponent({
     components: {
@@ -37,7 +37,7 @@
         types.value = type;
         groups.value = group;
 
-        const list = await configApi.group();
+        const list = await configsApi.group();
 
         groupList.value = list.map((item: string) => {
           return group.find((one: Recordable) => one.value === item);
